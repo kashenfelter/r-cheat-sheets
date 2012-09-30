@@ -1,0 +1,76 @@
+\documentclass[twocolumn, DIV24,a4paper,BCOR0mm]{scrartcl}
+% \usepackage{kpfonts}
+
+\usepackage[T1]{fontenc}
+
+%Space around sections
+\usepackage[compact]{titlesec}
+\titlespacing{\section}{0pt}{2ex}{1ex}
+\titlespacing{\subsection}{0pt}{1ex}{0ex}
+\titlespacing{\subsubsection}{0pt}{-0.5ex}{-0.5ex}
+
+%Paragraph spacing
+\setlength{\parskip}{0cm}
+\setlength{\parindent}{1em}
+
+\linespread{0.9}
+\usepackage{scrpage2}
+
+\pagestyle{scrheadings}  
+\setheadsepline{.4pt}
+\ihead[]{Plotting cheat sheet}
+\chead[]{}
+\ohead[]{}
+\ifoot[]{\textit{Dr Colin Gillespie - c.gillespie@ncl.ac.uk}}
+\cfoot[]{}
+\ofoot[\pagemark]{\pagemark}
+
+\begin{document}
+<<echo=FALSE>>=
+ev = FALSE
+@
+
+\textsc{Work in progress}
+\subsubsection*{Plotting}
+
+<<eval=ev>>=
+plot(x) # Basic scatter plot
+plot(x, y) #Plot of x and y
+hist(x) # Histogram
+barplot(x) #Bar chart
+boxplot(x) #Box and whiskers plot
+pie(x) # Pie chart
+@
+
+\subsubsection*{Standard plot arguments}
+
+<<eval=FALSE>>=
+xlab = "x-axis label" #See also ylab
+xlim = c(0, 10)#x axis range
+main = "Main title"
+sub = "sub title"
+lwd = 2 #Line width
+col = "red" #Line colour, or
+col = 2 
+@
+
+
+\subsubsection*{Graphical parameters}
+
+These can be set globally with par(...); many can be passed as parameters
+to plotting commands.
+\begin{itemize}
+\item adj controls text justification (0 left-justified, 0.5 centred, 1 right-justified)
+\item bg specifies the colour of the background (ex. : bg="red", bg="blue", . . . the list of the 657 available colours is displayed with colors()) 
+\item bty controls the type of box drawn around the plot, allowed values are: "o",
+"l", "7", "c", "u" ou "]" (the box looks like the corresponding char-
+acter); if bty="n" the box is not drawn
+\item cex a value controlling the size of texts and symbols with respect to the default; the following parameters have the same control for numbers on the axes, cex.axis, the axis labels, cex.lab, the title, cex.main, and the sub-title, cex.sub
+\item col controls the color of symbols and lines; use color names: "red", "blue" see colors() or as "\#RRGGBB"; see rgb(), hsv(), gray(), and rainbow(); as for cex there are: col.axis, col.lab, col.main, col.sub
+\item font an integer which controls the style of text (1: normal, 2: italics, 3:bold, 4: bold italics); as for cex there are: font.axis, font.lab, font.main, font.sub
+\item las an integer which controls the orientation of the axis labels (0: parallel to the axes, 1: horizontal, 2: perpendicular to the axes, 3: vertical)
+\end{itemize}
+
+
+
+\end{document}

@@ -1,0 +1,193 @@
+\documentclass[twocolumn, DIV24,a4paper,BCOR0mm]{scrartcl}
+% \usepackage{kpfonts}
+
+\usepackage[T1]{fontenc}
+
+%Space around sections
+\usepackage[compact]{titlesec}
+\titlespacing{\section}{0pt}{2ex}{1ex}
+\titlespacing{\subsection}{0pt}{1ex}{0ex}
+\titlespacing{\subsubsection}{0pt}{-0.5ex}{-0.5ex}
+
+%Paragraph spacing
+\setlength{\parskip}{0cm}
+\setlength{\parindent}{1em}
+
+\linespread{0.9}
+\usepackage{scrpage2}
+
+\pagestyle{scrheadings}  
+\setheadsepline{.4pt}
+\ihead[]{Data frame cheat sheet}
+\chead[]{}
+\ohead[]{}
+\ifoot[]{\textit{Dr Colin Gillespie - c.gillespie@ncl.ac.uk}}
+\cfoot[]{}
+\ofoot[\pagemark]{\pagemark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Original cheat came from 
+%http://markthegraph.blogspot.com.au/2012/09/r-data-frames-cheat-sheet.html
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\SweaveOpts{concordance=TRUE}
+<<echo=FALSE>>=
+ev = FALSE
+@
+
+
+
+
+\subsubsection*{Create}
+
+<<eval=ev>>=
+# data frame: list of equal length vectors
+col1 = c('a', 'b', 'c')
+col2 = c(10, 20, 30)
+dd = data.frame(col1=col1, col2=col2)
+@
+
+\subsubsection*{Import/Export}
+
+<<eval=ev,tidy=FALSE>>=
+##May want stringsAsFactors=FALSE
+dd = read.csv('file.csv', header=TRUE)
+write.csv(dd, file='file.csv', 
+          row.names=FALSE)
+@
+
+\subsubsection*{Basic information about the data frame}
+
+<<eval=ev, tidy=FALSE>>=
+is.data.frame(dd) # TRUE or FALSE
+ncol(dd); nrow(dd); dim(dd) #Dimensions
+colnames(dd); rownames(dd) #Row/Col names
+head(dd); tail(dd) # First/last six rows
+str(dd) # Structure of any object
+summary(dd) # a quick stats summary
+@
+
+
+\subsubsection*{Referencing cells}
+
+<<eval=ev>>=
+## observations in rows; variables in cols
+d = dd[row, col] # row & col: intergers
+dd[row, col] = 3 # set
+@
+
+\subsubsection*{Referencing rows}
+
+<<eval=ev>>=
+## First/Last row
+dd[1, ]; dd[nrow(dd), ]
+## ith row
+dd[i, ]
+@
+
+\subsubsection*{Referencing columns}
+
+<<eval=ev>>=
+## These references return a vector
+dd$Names
+dd[, 'Names']
+dd[, i] # the ith columm
+dd[['Names']]
+dd[, 1] # First column
+dd[, ncol(dd)] # final column
+
+## These commands return a data frame
+dd["Names"] # returns 1 col dd
+dd[i] # returns 1 col dd
+@
+
+\subsubsection*{Adding rows and columns}
+
+<<eval=ev>>=
+## Row bind
+dd = rbind(dd, dd2)
+## Column bind
+dd = cbind(dd, dd1) # left column add
+dd = cbind(dd1, dd) # right column add
+
+## Creating new columns from values
+dd$newCol = 0 # Col of 0s
+dd$newCol = dd$oldCol # copy a col
+dd[, 'prcnt'] = dd$x / sum(dd$x) * 100
+dd$col3 = with(dd, col1 + col2)
+transform(dd, col3 = col1 * col2)
+@
+
+
+\newpage
+
+\subsubsection*{Change column/row names}
+
+<<eval=ev>>=
+##Change colnames to rownames
+colnames(dd) = c("c1", "c2")
+colnames(dd)[i] = "Ci"
+@
+
+\subsubsection*{Selecting rows}
+
+<<eval=ev>>=
+dd[-i, ]#drop ith row
+dd[-c(-i, j), ]#drop ith, jth row
+dd[1:n,]#Select rows 1 to n
+##Select rows where 
+#x>5 AND y < 5
+dd[ (dd$x > 5) & (dd$y < 5), ]##Or
+subset(dd, (x > 5) & (y < 5))
+#x>5 OR y < 5
+dd[ (dd$x > 5) | (dd$y < 5), ]##Or
+subset(dd, (x > 5) | (y < 5))
+#Other operators
+# !=, ==, >, >=, <=, < 
+@
+
+\subsubsection*{Selecting columns}
+
+<<eval=ev>>=
+dd[, -1] # drop first column
+dd[, -c(1, 3)] # drop cols 1 & 3
+dd[, c(1, 3)] # keep cols 1 & 3
+##Keep columns
+dd[, (colnames(dd) %in% c('Age', 'Name'))]
+##Discard columns
+dd[, !(colnames(dd) %in% c('Age', 'Name'))]
+@
+
+\subsubsection*{Manipulation}
+
+<<eval=ev>>=
+dd[order(dd$Age, decreasing=), ]##Sort
+dd[order(dd$col2, TRUE), ]##Sort decreasing
+as.data.frame(t(dd)) #Transpose
+merge(dd, dd1, by='col', all=TRUE)#Merge
+
+rownames(dd) = seq_len(nrow(dd))#rename rows
+@
+          
+\subsubsection*{Missing data (NA)}
+
+<<eval=ev>>=
+# Global detect
+any(is.na(dd)) # anywhere
+any(is.na(dd$col)) # anywhere in a col
+# delete selected missing data rows
+dd[!is.na(dd$col), ]
+dd[!is.na(dd[, 1]), ]
+# replace NAs with something else
+dd[is.na(dd)] = 0 # works on whole dd
+dd$col[is.na(dd$col)] = new_value
+@
+
+
+
+
+
+
+
+\end{document}
