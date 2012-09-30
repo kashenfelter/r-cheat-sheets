@@ -25,3 +25,7 @@
 *.maf
 *.mtc
 *.mtc0
+.Rproj.user
+plotting.tex
+plotting.pdf
+plotting-concordance.tex
