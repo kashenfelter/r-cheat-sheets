@@ -24,6 +24,17 @@
 \ifoot[]{\textit{Dr Colin Gillespie - c.gillespie@ncl.ac.uk}}
 \cfoot[]{}
 \ofoot[\pagemark]{\pagemark}
+<<setup, include=FALSE, cache=FALSE>>=
+#options(replace.assign=TRUE,width=60)
+opts_chunk$set(fig.path='figure/graphics-', cache.path='cache/graphics-', fig.align='center', fig.height=3)
+#, dev='tikz', fig.width=5, fig.height=5, fig.show='hold', cache=TRUE, par=TRUE)
+knit_hooks$set(crop=hook_pdfcrop)
+  #par=function(before, options, envir){
+#if (before && options$fig.show!='none') par(mar=c(4,4,.1,.1),cex.lab=.95,cex#.axis=.9,mgp=c(2,.7,0),tcl=-.3)
+#}, crop=hook_pdfcrop)
+
+@
+
 
 \begin{document}
 <<echo=FALSE>>=
@@ -57,20 +68,25 @@ col = 2
 
 \subsubsection*{Graphical parameters}
 
-These can be set globally with par(...); many can be passed as parameters
-to plotting commands.
+These can be set globally with \texttt{par(...)}; many can be passed as parameters to plotting commands.
 \begin{itemize}
-\item adj controls text justification (0 left-justified, 0.5 centred, 1 right-justified)
-\item bg specifies the colour of the background (ex. : bg="red", bg="blue", . . . the list of the 657 available colours is displayed with colors()) 
-\item bty controls the type of box drawn around the plot, allowed values are: "o",
-"l", "7", "c", "u" ou "]" (the box looks like the corresponding char-
-acter); if bty="n" the box is not drawn
-\item cex a value controlling the size of texts and symbols with respect to the default; the following parameters have the same control for numbers on the axes, cex.axis, the axis labels, cex.lab, the title, cex.main, and the sub-title, cex.sub
-\item col controls the color of symbols and lines; use color names: "red", "blue" see colors() or as "\#RRGGBB"; see rgb(), hsv(), gray(), and rainbow(); as for cex there are: col.axis, col.lab, col.main, col.sub
-\item font an integer which controls the style of text (1: normal, 2: italics, 3:bold, 4: bold italics); as for cex there are: font.axis, font.lab, font.main, font.sub
-\item las an integer which controls the orientation of the axis labels (0: parallel to the axes, 1: horizontal, 2: perpendicular to the axes, 3: vertical)
+\item \texttt{adj} controls text justification: 0 left-justified, 0.5 centred, 1 right-justified.
+\item \texttt{bg} specifies the colour of the background, e.g. \texttt{bg="red"} or \texttt{bg="blue"}. See \texttt{colors()} for a list of the 657 available colours. 
+\item \texttt{bty} controls the type of box drawn around the plot, allowed values are: "o", "l", "7", "c", "u" ou "]" (the box looks like the corresponding character); if \texttt{bty="n"} the box is not drawn
+\item \texttt{cex} a value controlling the size of texts and symbols with respect to the default. Related options are: \texttt{cex.axis}, \texttt{cex.lab}, \texttt{cex.main} and \texttt{cex.sub}.
+\item \texttt{col} controls the color of symbols and lines; use color names: "red", "blue" see \texttt{colors()} or as "\#RRGGBB"; see rgb(), hsv(), gray(), and rainbow(); as for cex there are: col.axis, col.lab, col.main, col.sub
+\item \texttt{font}: an integer which controls the style of text (1: normal, 2: italics, 3:bold, 4: bold italics); as for \texttt{cex} there are: \texttt{font.axis}, \texttt{font.lab}, \texttt{font.main}, \texttt{font.sub}
+\item \texttt{las}: an integer which controls the orientation of the axis labels (0: parallel to the axes, 1: horizontal, 2: perpendicular to the axes, 3: vertical)
 \end{itemize}
+\newpage
 
+<<echo=FALSE,fig.cap="R pch symbols",crop=TRUE, out.width='0.9\\linewidth',>>=
+x = rep(1:13, 2)[1:26]
+y = rep(1:2, each=13)[1:26]
+plot(x, y, pch=0:25, bty="n", axes=FALSE, ylim=c(0.5,2.5), xlim=c(1, 13.5),
+     xlab="", ylab="", cex=2)
+text(x+0.3, y + 0.3, 0:25, cex=0.8)
+@
 
 
 \end{document}
