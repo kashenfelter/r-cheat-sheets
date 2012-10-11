@@ -1,6 +1,6 @@
 \documentclass[twocolumn, DIV24,a4paper,BCOR0mm]{scrartcl}
 % \usepackage{kpfonts}
-
+\usepackage{hyperref}
 \usepackage[T1]{fontenc}
 
 %Space around sections
@@ -21,9 +21,9 @@
 \ihead[]{Plotting cheat sheet}
 \chead[]{}
 \ohead[]{}
-\ifoot[]{\textit{Dr Colin Gillespie - c.gillespie@ncl.ac.uk}}
+\ifoot[]{\textit{Dr Colin Gillespie - colin.gillespie@newcastle.ac.uk}}
 \cfoot[]{}
-\ofoot[\pagemark]{\pagemark}
+\ofoot[]{\url{https://github.com/csgillespie/r-cheat-sheets}}
 <<setup, include=FALSE, cache=FALSE>>=
 #options(replace.assign=TRUE,width=60)
 opts_chunk$set(fig.path='figure/graphics-', cache.path='cache/graphics-', fig.align='center', fig.height=3)
@@ -87,6 +87,70 @@ plot(x, y, pch=0:25, bty="n", axes=FALSE, ylim=c(0.5,2.5), xlim=c(1, 13.5),
      xlab="", ylab="", cex=2)
 text(x+0.3, y + 0.3, 0:25, cex=0.8)
 @
+
+<<echo=FALSE,fig.cap="The six standard R line types.",crop=TRUE, out.width='0.9\\linewidth',>>=
+plot(0:1, 0:1, type="n", axes=FALSE, cex=2, xlab="", ylab="", ylim=c(0, 1.1))
+y = seq(0,1,length.out=6)
+segments(0.05, y, 1, y, lty=6:1, lwd=3)
+text(0, y, 1:6, cex=0.8)
+
+@
+
+<<echo=FALSE,fig.cap="The eight standard colours.",crop=TRUE, out.width='0.9\\linewidth',>>=
+plot(0:1, 0:1,  type="n", axes=FALSE, cex=2, xlab="", ylab="", xlim=c(-0.2, 1.1))
+x = seq(0,1,length.out=8)
+epsilon = 0.05
+for(i in 1:8) 
+  polygon(c(x[i]+epsilon,  x[i]+epsilon, x[i]-epsilon, x[i]-epsilon), c(0.2,0.7,0.7,0.2), col=i)
+
+text(x, 0.8, 1:8)
+text(x, 0.05, palette(), cex=0.8)
+@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 \end{document}
