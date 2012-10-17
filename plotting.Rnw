@@ -111,6 +111,34 @@ text(x, 0.05, palette(), cex=0.8)
 
 
 
+<<echo=FALSE, out.width='0.9\\linewidth',crop=TRUE>>=
+# x = rep(rep(c(0,0, 1, 1), 26) + rep(0:25, each=4), 26)
+# y = rep(rep(c(0,1, 1, 0), 26), 26) + rep(0:25, each=4*26)
+
+x = rep(rep(c(0,0, 1, 1), 16) + rep(0:15, each=4), 42)
+y = rep(rep(c(0,2, 2, 0), 16), 42) + 2*rep(0:41, each=4*16)
+
+x = rep(rep(c(0,0, 1, 1), 10) + rep(0:9, each=4), 66)
+y = rep(rep(c(0,2, 2, 0), 10), 66) + 2*rep(0:65, each=4*10)
+
+
+x = matrix(x, ncol=4, byrow=TRUE)
+y = matrix(y, ncol=4, byrow=TRUE)
+z = as.data.frame(cbind(x, y))[1:length(colours()),]
+z$colours = colours()
+par(mar=c(0,0,0,0),  mgp=c(0,0,0))
+plot(0, 0, xlim=c(0, 16), ylim=c(0,2*66), type="n", axes=FALSE, asp=0.15)
+sink =apply(z, 1, 
+            function(i) polygon(i[1:4], i[5:8], col=i[9], 
+                                border="white", lwd=0.5))
+k = seq(2, nrow(z), 2)
+#text(z[k, 1]+0.5, z[k, 5]+0.5, labels=k, cex=0.5)  
+for(i in seq(2, nrow(z),2)) {
+  k = i
+  if((i-1) %% 20 < 11) k = i - 1
+  text(z[k, 1]+0.5, z[k, 5]+1, labels=k, cex=0.2)  
+}
+@
 
 
 
