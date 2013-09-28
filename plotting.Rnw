@@ -2,6 +2,8 @@
 % \usepackage{kpfonts}
 \usepackage{hyperref}
 \usepackage[T1]{fontenc}
+\usepackage{paralist}
+\newcommand{\cc}{\texttt}
 
 %Space around sections
 \usepackage[compact]{titlesec}
@@ -21,14 +23,30 @@
 \ihead[]{Plotting cheat sheet}
 \chead[]{}
 \ohead[]{}
-\ifoot[]{\textit{Dr Colin Gillespie - colin.gillespie@newcastle.ac.uk}}
+\ifoot[]{\textit{Dr Colin Gillespie - csgillespie@gmail.com}}
 \cfoot[]{}
 \ofoot[]{\url{https://github.com/csgillespie/r-cheat-sheets}}
 <<setup, include=FALSE, cache=FALSE>>=
-#options(replace.assign=TRUE,width=60)
-opts_chunk$set(fig.path='figure/graphics-', cache.path='cache/graphics-', fig.align='center', fig.height=3)
-#, dev='tikz', fig.width=5, fig.height=5, fig.show='hold', cache=TRUE, par=TRUE)
+library(knitr)
+options(replace.assign=FALSE,width=50)
+
+opts_chunk$set(fig.path='figure/graphics-', 
+               cache.path='cache/graphics-', 
+               fig.align='center', 
+               dev='pdf', fig.height=3, 
+               fig.show='hold', cache=FALSE, par=TRUE)
 knit_hooks$set(crop=hook_pdfcrop)
+
+knit_hooks$set(par=function(before, options, envir){
+    if (before && options$fig.show!='none') {
+        par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
+            mgp=c(2,.7,0),tcl=-.01, las=1)
+}}, crop=hook_pdfcrop)
+
+# opts_chunk$set(fig.path='figure/graphics-', 
+#                cache.path='cache/graphics-', fig.align='center', fig.height=3)
+# #, dev='tikz', fig.width=5, fig.height=5, fig.show='hold', cache=TRUE, par=TRUE)
+# knit_hooks$set(crop=hook_pdfcrop)
   #par=function(before, options, envir){
 #if (before && options$fig.show!='none') par(mar=c(4,4,.1,.1),cex.lab=.95,cex#.axis=.9,mgp=c(2,.7,0),tcl=-.3)
 #}, crop=hook_pdfcrop)
@@ -41,63 +59,67 @@ knit_hooks$set(crop=hook_pdfcrop)
 ev = FALSE
 @
 
-\textsc{Work in progress}
-\subsubsection*{Plotting}
+%\textsc{Work in progress}
+\subsubsection*{Plotting}\vspace{-0.5cm}
 
 <<eval=ev>>=
-plot(x) # Basic scatter plot
+plot(x) #Basic scatter plot
 plot(x, y) #Plot of x and y
-hist(x) # Histogram
+hist(x) #Histogram
 barplot(x) #Bar chart
 boxplot(x) #Box and whiskers plot
-pie(x) # Pie chart
+pie(x) #Pie-chart
 @
+\vspace{-1cm}
 
-\subsubsection*{Standard plot arguments}
+\subsubsection*{Standard plot arguments}\vspace{-0.5cm}
 
 <<eval=FALSE>>=
 xlab = "x-axis label" #See also ylab
-xlim = c(0, 10)#x axis range
+xlim = c(0, 10)#x-axis range
 main = "Main title"
 sub = "sub title"
 lwd = 2 #Line width
 col = "red" #Line colour, or
 col = 2 
+cex = 1 
 @
 
 
-\subsubsection*{Graphical parameters}
+\subsubsection*{Graphical parameters}\medskip
 
-These can be set globally with \texttt{par(...)}; many can be passed as parameters to plotting commands.
-\begin{itemize}
-\item \texttt{adj} controls text justification: 0 left-justified, 0.5 centred, 1 right-justified.
-\item \texttt{bg} specifies the colour of the background, e.g. \texttt{bg="red"} or \texttt{bg="blue"}. See \texttt{colors()} for a list of the 657 available colours. 
-\item \texttt{bty} controls the type of box drawn around the plot, allowed values are: "o", "l", "7", "c", "u" ou "]" (the box looks like the corresponding character); if \texttt{bty="n"} the box is not drawn
-\item \texttt{cex} a value controlling the size of texts and symbols with respect to the default. Related options are: \texttt{cex.axis}, \texttt{cex.lab}, \texttt{cex.main} and \texttt{cex.sub}.
-\item \texttt{col} controls the color of symbols and lines; use color names: "red", "blue" see \texttt{colors()} or as "\#RRGGBB"; see rgb(), hsv(), gray(), and rainbow(); as for cex there are: col.axis, col.lab, col.main, col.sub
-\item \texttt{font}: an integer which controls the style of text (1: normal, 2: italics, 3:bold, 4: bold italics); as for \texttt{cex} there are: \texttt{font.axis}, \texttt{font.lab}, \texttt{font.main}, \texttt{font.sub}
-\item \texttt{las}: an integer which controls the orientation of the axis labels (0: parallel to the axes, 1: horizontal, 2: perpendicular to the axes, 3: vertical)
-\end{itemize}
-\newpage
+\noindent These can be set globally with \cc{par(...)}; many can be passed as parameters to plotting commands.
+\begin{compactitem}
+\item \cc{adj} controls text justification: 0 left-justified, 0.5 centred, 1 right-justified.
+\item \cc{bg} specifies the colour of the background, e.g. \cc{bg="red"} or \cc{bg="blue"}. See \cc{colors()} for a list of the 657 available colours. 
+\item \cc{bty} controls the type of box drawn around the plot, allowed values are: "o", "l", "7", "c", "u" ou "]" (the box looks like the corresponding character); if \cc{bty="n"} the box is not drawn
+\item \cc{cex} a value controlling the size of texts and symbols with respect to the default. Related options are: \cc{cex.axis}, \cc{cex.lab}, \cc{cex.main} and \cc{cex.sub}.
+\item \cc{col} controls the colour of symbols and lines; use colour names: "red", "blue". See \cc{colors()} for a list of named colours. Other colour types: \cc{rgb()}, \cc{hsv()}, \cc{gray()}, and \cc{rainbow()}. Related options are: \cc{col.axis}, \cc{col.lab}, \cc{col.main}, \cc{col.sub}.
+\item \cc{font}: an integer which controls the style of text (1: normal, 2: \textit{italics}, 3: \textbf{bold}, 4: \textit{\textbf{bold italics}}). Related options: \cc{font.axis}, \cc{font.lab}, \cc{font.main}, \cc{font.sub}
+\item \cc{las}: an integer which controls the orientation of the axis labels (0: parallel to the axes, 1: horizontal, 2: perpendicular to the axes, 3: vertical)
+\end{compactitem}
 
-<<echo=FALSE,fig.cap="R pch symbols",crop=TRUE, out.width='0.9\\linewidth',>>=
+<<echo=FALSE,fig.cap="R pch symbols",crop=TRUE, out.width='0.9\\linewidth',fig.pos="h">>=
 x = rep(1:13, 2)[1:26]
-y = rep(1:2, each=13)[1:26]
-plot(x, y, pch=0:25, bty="n", axes=FALSE, ylim=c(0.5,2.5), xlim=c(1, 13.5),
+y = rep(1:2, each=13)[1:26] 
+
+x = x[c(14:26, 1:13)]; y = y[c(14:26, 1:13)]
+plot(x, y, pch=0:25, bty="n", axes=FALSE, 
+     ylim=c(0.5,2.5), xlim=c(1, 13.5),
      xlab="", ylab="", cex=2)
 text(x+0.3, y + 0.3, 0:25, cex=0.8)
 @
 
-<<echo=FALSE,fig.cap="The six standard R line types.",crop=TRUE, out.width='0.9\\linewidth',>>=
+<<echo=FALSE,fig.cap="The six standard R line types.",crop=TRUE, out.width='0.9\\linewidth',fig.pos="h">>=
 plot(0:1, 0:1, type="n", axes=FALSE, cex=2, xlab="", ylab="", ylim=c(0, 1.1))
 y = seq(0,1,length.out=6)
 segments(0.05, y, 1, y, lty=6:1, lwd=3)
-text(0, y, 1:6, cex=0.8)
-
+text(0, y, 6:1, cex=0.8)
 @
 
 <<echo=FALSE,fig.cap="The eight standard colours.",crop=TRUE, out.width='0.9\\linewidth',>>=
-plot(0:1, 0:1,  type="n", axes=FALSE, cex=2, xlab="", ylab="", xlim=c(-0.2, 1.1))
+plot(0:1, 0:1,  type="n", 
+     axes=FALSE, cex=2, xlab="", ylab="", xlim=c(-0.2, 1.1))
 x = seq(0,1,length.out=8)
 epsilon = 0.05
 for(i in 1:8) 
@@ -140,7 +162,14 @@ for(i in seq(2, nrow(z),2)) {
 }
 @
 
+\subsubsection*{Additional plotting functions}
+\bigskip
 
+\begin{compactitem}
+\item \cc{points}
+\item \cc{lines}
+\item \cc{abline}
+\end{compactitem}
 
 
 
