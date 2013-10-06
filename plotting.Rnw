@@ -9,7 +9,7 @@
 \usepackage[compact]{titlesec}
 \titlespacing{\section}{0pt}{2ex}{1ex}
 \titlespacing{\subsection}{0pt}{1ex}{0ex}
-\titlespacing{\subsubsection}{0pt}{-0.5ex}{-0.5ex}
+\titlespacing{\subsubsection}{0pt}{-2.5ex}{-2.5ex}
 
 %Paragraph spacing
 \setlength{\parskip}{0cm}
@@ -60,8 +60,7 @@ ev = FALSE
 @
 
 %\textsc{Work in progress}
-\subsubsection*{Plotting}\vspace{-0.5cm}
-
+\subsubsection*{Plotting}
 <<eval=ev>>=
 plot(x) #Basic scatter plot
 plot(x, y) #Plot of x and y
@@ -70,9 +69,11 @@ barplot(x) #Bar chart
 boxplot(x) #Box and whiskers plot
 pie(x) #Pie-chart
 @
-\vspace{-1cm}
+%\vspace{-0.9cm}
 
-\subsubsection*{Standard plot arguments}\vspace{-0.5cm}
+\subsubsection*{Standard plot arguments}
+
+%\vspace{-0.4cm}
 
 <<eval=FALSE>>=
 xlab = "x-axis label" #See also ylab
@@ -86,7 +87,7 @@ cex = 1
 @
 
 
-\subsubsection*{Graphical parameters}\medskip
+\subsubsection*{Graphical parameters}\bigskip
 
 \noindent These can be set globally with \cc{par(...)}; many can be passed as parameters to plotting commands.
 \begin{compactitem}
@@ -162,6 +163,7 @@ for(i in seq(2, nrow(z),2)) {
 }
 @
 
+\bigskip
 \subsubsection*{Additional plotting functions}
 \bigskip
 
@@ -169,6 +171,7 @@ for(i in seq(2, nrow(z),2)) {
 \item \cc{points}
 \item \cc{lines}
 \item \cc{abline}
+\item \cc{segments}
 \end{compactitem}
 
 
